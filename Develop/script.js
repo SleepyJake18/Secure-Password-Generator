@@ -1,12 +1,25 @@
-// Assignment Code
+// variables used to determine parameters of password
   var characterAmount = '';
   var useUpper = '';
   var useLower = '';
   var useSpecial = '';
   var useNumbers = '';
   var passwordCriteria = '';
+  // selects button with id=generate 
+  var generateBtn = document.querySelector("#generate");
+  // variables used to create arrays of charcodes for passwordCriteria
+  var numberCharCodes = lowToHigh(48, 57);
+  var lowercaseCharCodes = lowToHigh(97, 122);
+  var uppercaseCharCodes = lowToHigh(65, 90);
+  var symbolCharCodes = lowToHigh(33, 47).concat(
+    lowToHigh(58, 64).concat(
+      lowToHigh(91, 96).concat(
+        lowToHigh(123, 126)
+      )
+    )
+  );
 
-  
+  // function used to gather user input for parameters of password
 function promptUser(){
   characterAmount = prompt(`How long should your password be?`);
   useUpper = confirm(`Do you want to use uppercase letters?`);
@@ -59,7 +72,6 @@ function promptUser(){
     passwordCriteria = numberCharCodes
     
   }
-
   return characterAmount
   return useUpper
   return useLower
@@ -68,18 +80,7 @@ function promptUser(){
   return passwordCriteria
 }
 
-var generateBtn = document.querySelector("#generate");
-var numberCharCodes = lowToHigh(48, 57);
-var lowercaseCharCodes = lowToHigh(97, 122);
-var uppercaseCharCodes = lowToHigh(65, 90);
-var symbolCharCodes = lowToHigh(33, 47).concat(
-  lowToHigh(58, 64).concat(
-    lowToHigh(91, 96).concat(
-      lowToHigh(123, 126)
-    )
-  )
-);
-
+// function used to generate arrays of charcodes for passwordCriteria
 function lowToHigh(low, high) {
   var array = []
   for (i = low; i<= high; i++) {
@@ -87,7 +88,7 @@ function lowToHigh(low, high) {
   }
   return array 
 }
-
+// function used to convert charcode array values to their meaning in plain text. Pieces them together in one string in random order to create password
 function generatePassword() {
   var passwordCharacters = []
   for (var i = 0; i < characterAmount; i++) {
@@ -97,7 +98,7 @@ function generatePassword() {
    return passwordCharacters.join("")
 }
 
-// Write password to the #password input
+// Takes the value from generatePassword function and inputs it to the value of the text area with the id=password
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -106,6 +107,6 @@ function writePassword() {
 
 }
 
-// Add event listener to generate button
+// Adds event listener to generate password button to prompt the user for input then execute writePassword function.
 generateBtn.addEventListener("click", promptUser);
 generateBtn.addEventListener("click", writePassword);
